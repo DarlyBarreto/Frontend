@@ -1,17 +1,28 @@
-# Usa la imagen base de Node
-FROM node:18 AS build
+# Usa una imagen base con PHP 8 y Nginx
+FROM richarvey/nginx-php-fpm:latest
 
-# Crea el directorio de la aplicación
-WORKDIR /app
+# Copiar los archivos de tu aplicación al contenedor
+COPY . /var/www/html
 
-# Copia el package.json y package-lock.json
-COPY package*.json ./
+# Establecer los permisos correctos para los archivos
+RUN chown -R www-data:www-data /var/www/html
 
-# Instala las dependencias
-RUN npm install
+# Instalar dependencias de PHP con Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install dir=/usr/local/bin --filename=composer
 
-# Copia el resto de los archivos
-COPY . /app/.
+# Instalar las dependencias de Laravel
+RUN composer install --no-dev --optimize-autoloader
 
-# Ejecuta el build
-RUN npm run build
+# Ejecutar los comandos de caché en producción
+RUN php artisan config:cache
+RUN php artisan route:cache
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Copiar y dar permisos al script deploy.sh
+COPY deploy.sh /deploy.sh
+RUN chmod +x /deploy.sh
+
+# Comando por defecto para ejecutar el script deploy.sh
+CMD ["/deploy.sh"]
