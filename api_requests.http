@@ -1,0 +1,9 @@
+http://127.0.0.1:8000/api/register
+Content-Type: application/json
+
+{
+    "name": "Luis Gonzalo",
+    "email": "luis@example.com",
+    "password": "password"
+}
+

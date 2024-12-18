@@ -1,0 +1,5 @@
+
+
+
+GET http://localhost:8000/api/admin/users
+Authorization: Bearer 14|XxNlZEizsW2IPAGXy1aOA220ZkFOuSRRh0FCE32cf3b64ea8
