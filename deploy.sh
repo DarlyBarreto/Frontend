@@ -14,8 +14,6 @@ composer install --no-dev --optimize-autoloader
 # Ejecutar migraciones
 
 
-
-
 # Cachear configuraciones
 echo "Cacheando configuraciones..."
 php artisan config:cache
@@ -27,7 +25,6 @@ php artisan route:cache
 # Cachear vistas
 echo "Cacheando vistas..."
 php artisan view:cache
-
 
 # Asegurar que los permisos son correctos
 echo "Configurando permisos..."
